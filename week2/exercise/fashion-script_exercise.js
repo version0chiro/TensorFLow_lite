@@ -13,6 +13,7 @@ function getModel() {
     // should have 10 units and a softmax activation function. You are free to use as
     // many layers, filters, and neurons as you like.
     // HINT: Take a look at the MNIST example.
+    model=tf.sequential()
     model.add(tf.layers.conv2d({inputShape: [28, 28, 1], kernelSize: 3, filters: 8, activation: 'relu'}));
     model.add(tf.layers.maxPooling2d({poolSize: [2, 2]}));
     model.add(tf.layers.conv2d({filters: 16, kernelSize: 3, activation: 'relu'}));
