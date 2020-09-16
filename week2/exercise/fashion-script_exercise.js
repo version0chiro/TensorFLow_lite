@@ -34,7 +34,7 @@ async function train(model, data) {
 
     // Create the container for the callback. Set the name to 'Model Training' and
     // use a height of 1000px for the styles.
-    const container = {name:'Model Training',styles:{height:'640px'}};// YOUR CODE HERE
+    const container = {name:'Model Training',styles:{height:'1000px'}};// YOUR CODE HERE
 
 
     // Use tfvis.show.fitCallbacks() to setup the callbacks.
@@ -51,7 +51,7 @@ async function train(model, data) {
     const [trainXs, trainYs] = tf.tidy(()=>{
       const d = data.nextTrainBatch(TRAIN_DATA_SIZE);
       return[
-        d.xs.reshape([TRAIN_DATA_SIZE,28,28,1]);
+        d.xs.reshape([TRAIN_DATA_SIZE,28,28,1]),
         d.labels
       ];
     })// YOUR CODE HERE
@@ -63,7 +63,7 @@ async function train(model, data) {
     const [testXs, testYs] = tf.tidy(()=>{
       const d = data.nextTrainBatch(TEST_DATA_SIZE);
       return[
-        d.xs.reshape([TEST_DATA_SIZE,28,28,1]);
+        d.xs.reshape([TEST_DATA_SIZE,28,28,1]),
         d.labels
       ];
     })// YOUR CODE HERE
