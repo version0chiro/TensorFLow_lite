@@ -48,13 +48,25 @@ async function train(model, data) {
     // Get the training batches and resize them. Remember to put your code
     // inside a tf.tidy() clause to clean up all the intermediate tensors.
     // HINT: Take a look at the MNIST example.
-    const [trainXs, trainYs] = // YOUR CODE HERE
+    const [trainXs, trainYs] = tf.tidy(()=>{
+      const d = data.nextTrainBatch(TRAIN_DATA_SIZE);
+      return[
+        d.xs.reshape([TRAIN_DATA_SIZE,28,28,1]);
+        d.labels
+      ];
+    })// YOUR CODE HERE
 
 
     // Get the testing batches and resize them. Remember to put your code
     // inside a tf.tidy() clause to clean up all the intermediate tensors.
     // HINT: Take a look at the MNIST example.
-    const [testXs, testYs] = // YOUR CODE HERE
+    const [testXs, testYs] = tf.tidy(()=>{
+      const d = data.nextTrainBatch(TEST_DATA_SIZE);
+      return[
+        d.xs.reshape([TEST_DATA_SIZE,28,28,1]);
+        d.labels
+      ];
+    })// YOUR CODE HERE
 
 
     return model.fit(trainXs, trainYs, {
