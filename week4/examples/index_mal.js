@@ -1,6 +1,7 @@
 let mobilenet;
 let model;
 const webcam = new Webcam(document.getElementById('wc'));
+const dataset = new RPSDataset();
 
 async function loadMobilenet(){
   const mobilenet = await tf.loadLayersModel('https://storage.googleapis.com/tfjs-models/tfjs/mobilenet_v1_0.25_224/model.jason');
@@ -26,6 +27,18 @@ async function train(){
       tf.layers.dense({units:100,activation:'relu'}),
       tf.layers.dense({units:3,activation:'softmax'})
     ]
+  });
+  const optimizer = tf.train.adam(0.0001);
+  model.compile({optimizer: optimizer, loss : 'categoricalCrossentropy'});
+  let loss = 0;
+  model.fit(dataset.xs,dataset.ys,{
+    epochs:10,
+    callbacks:{
+      onBatchEnd: async (batch,logs) => {
+        loss = logs.loss.toFixed(5);
+        console.log('Loss: '+loss);
+      }
+    }
   });
 }
 
