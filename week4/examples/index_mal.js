@@ -21,6 +21,8 @@ const embeddings = mobilenet.predict(img);
 const predictions = model.predict(embeddings);
 
 async function train(){
+  dataset.ys = null;
+  dataset.encodeLabels(3);
   model = tf.sequential({
     layers:[
       tf.layers.flatten({inputShape: mobilenet.outputs[0].shape.slice(1)}),
@@ -40,6 +42,16 @@ async function train(){
       }
     }
   });
+}
+
+function startPredicting(){
+	isPredicting = true;
+	predict();
+}
+
+function stopPredicting(){
+	isPredicting = false;
+	predict();
 }
 
 function handleButton(elem){
